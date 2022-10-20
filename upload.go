@@ -215,6 +215,15 @@ func (u Upload) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp
 	defer file.Close()
 
 	// Create the file within the DestDir directory
+	mdall_err := os.MkdirAll(u.DestDir+r.URL.Path, 0755)
+	if mdall_err != nil {
+		u.logger.Error("Create destdir path Error",
+			zap.String("msg", "MkdirAll: Error creating destination Directory "+u.DestDir+r.URL.Path),
+			zap.Error(mdall_err),
+		        zap.Object("request", caddyhttp.LoggableHTTPRequest{Request: r}))
+
+		return caddyhttp.Error(http.StatusInternalServerError, mdall_err)
+	}
 
 	tempFile, tmpf_err := os.OpenFile(u.DestDir+r.URL.Path+"/"+handler.Filename, os.O_RDWR|os.O_CREATE, 0755)
 
