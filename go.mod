@@ -108,3 +108,5 @@ require (
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	howett.net/plist v1.0.0 // indirect
 )
+
+replace github.com/git001/caddyv2-upload v0.0.0-20221020094206-05b1f2c64e55 => github.com/wenwenxiong/caddyv2-upload v0.0.0-20221020094206-05b1f2c64e55
