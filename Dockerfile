@@ -22,6 +22,7 @@ RUN rm -rf /usr/local/go \
   && tar xfvz xcaddy_${XCADDY_VERSION}_linux_amd64.tar.gz
 
 RUN export GOPROXY="https://goproxy.cn,direct" \
+  && export PATH=$PATH:/usr/local/go/bin \
   &&./xcaddy build --with github.com/kirsch33/realip \
     --with github.com/wenwenxiong/caddyv2-upload \
   && pwd \
@@ -35,4 +36,4 @@ RUN export GOPROXY="https://goproxy.cn,direct" \
 WORKDIR /opt/webroot/
 
 # CMD ["executable","param1","param2"] (exec form, this is the preferred form)
-CMD ["/usr/local/bin/caddy","run","-config","config/Caddyfile-upload.json"]
+CMD ["/usr/local/bin/caddy","run","--config","config/Caddyfile-upload.json"]
