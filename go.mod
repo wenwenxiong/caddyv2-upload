@@ -1,4 +1,4 @@
-module github.com/git001/caddyv2-upload
+module github.com/wenwenxiong/caddyv2-upload
 
 go 1.18
 
