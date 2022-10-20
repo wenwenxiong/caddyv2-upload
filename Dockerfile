@@ -11,15 +11,17 @@ RUN set -x \
   && apt-get -y update \
   && apt-get install -y curl \
   && mkdir build \
-  && cd build \
-  && curl -sSLO https://github.com/caddyserver/xcaddy/releases/download/v${XCADDY_VERSION}/xcaddy_${XCADDY_VERSION}_linux_amd64.tar.gz \
-  && curl -sSLO https://go.dev/dl/go1.${GOLANG_VERSION}.linux-amd64.tar.gz \
-  && rm -rf /usr/local/go \
+  && cd build 
+COPY xcaddy_${XCADDY_VERSION}_linux_amd64.tar.gz  .
+COPY go1.${GOLANG_VERSION}.linux-amd64.tar.gz  .
+#  && curl -sSLO https://github.com/caddyserver/xcaddy/releases/download/v${XCADDY_VERSION}/xcaddy_${XCADDY_VERSION}_linux_amd64.tar.gz \
+#  && curl -sSLO https://go.dev/dl/go1.${GOLANG_VERSION}.linux-amd64.tar.gz \
+RUN rm -rf /usr/local/go \
   && tar -C /usr/local -xzf go1.${GOLANG_VERSION}.linux-amd64.tar.gz \
   && export PATH=$PATH:/usr/local/go/bin \
   && tar xfvz xcaddy_${XCADDY_VERSION}_linux_amd64.tar.gz \
-  && ./xcaddy build --with github.com/kirsch33/realip \
-    --with github.com/git001/caddyv2-upload \
+  && export GOPROXY="https://goproxy.cn,direct" ./xcaddy build --with github.com/kirsch33/realip \
+    --with github.com/wenwenxiong/caddyv2-upload \
   && pwd \
   && mv caddy /usr/local/bin/ \
   && cd .. \

@@ -7,11 +7,9 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/caddyserver/caddy/v2"
 	"github.com/caddyserver/caddy/v2/caddyconfig/caddyfile"
 	"github.com/caddyserver/caddy/v2/caddyconfig/httpcaddyfile"
 	"github.com/caddyserver/caddy/v2/modules/caddyhttp"
-	"github.com/dustin/go-humanize"
 	"go.uber.org/zap"
 )
 
@@ -254,9 +252,10 @@ func (u Upload) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp
 	repl.Set("http.upload.filename", handler.Filename)
 	repl.Set("http.upload.filesize", handler.Size)
 
-	if u.ResponseTemplate != "" {
+	/*if u.ResponseTemplate != "" {
 		r.URL.Path = "/" + u.ResponseTemplate
-	}
+	}*/
+	u.logger.Info("show url path info", zap.String("url path", r.URL.Path))
 
 	if u.NotifyURL != "" {
 		errNotify := u.SendNotify(requuid)
