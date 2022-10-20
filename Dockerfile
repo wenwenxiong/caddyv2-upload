@@ -19,8 +19,9 @@ COPY go1.${GOLANG_VERSION}.linux-amd64.tar.gz  .
 RUN rm -rf /usr/local/go \
   && tar -C /usr/local -xzf go1.${GOLANG_VERSION}.linux-amd64.tar.gz \
   && export PATH=$PATH:/usr/local/go/bin \
-  && tar xfvz xcaddy_${XCADDY_VERSION}_linux_amd64.tar.gz \
-  && export GOPROXY="https://goproxy.cn,direct" \
+  && tar xfvz xcaddy_${XCADDY_VERSION}_linux_amd64.tar.gz
+
+RUN export GOPROXY="https://goproxy.cn,direct" \
   &&./xcaddy build --with github.com/kirsch33/realip \
     --with github.com/wenwenxiong/caddyv2-upload \
   && pwd \
